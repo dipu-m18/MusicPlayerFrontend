@@ -1,0 +1,33 @@
+<div class="logo">
+    <h1>Music Player</h1>
+</div>
+<div>
+    <div>
+        Sign up for free to start listening
+        <!-- <button type="button" class="btn btn-primary">Sign up Facebook</button> -->
+        <button type="button" class="btn btn-dark">SIGN UP WITH GOOGLE</button>
+         <br>
+    </div>
+    OR
+    <br>
+        <div>
+            <form [formGroup]="registerForm" >
+                <div class="form-group">
+                    <label>What's your email?</label>
+                    <input type="email" class="form-control" formControlName="email" value="Enter your email here.">
+                    <p *ngIf="registerForm.controls.email.errors" class="alert alert-danger">The feild is required</p>
+                </div>
+                <div class="form-group">
+                    <label>Create Password</label>
+                    <input type="password" class="form-control" formControlName="password" value="Create a password here.">
+                    <p *ngIf="registerForm.controls.password.errors" class="alert aler-danger">The field is mandatory</p>
+                </div>
+                <div class="form-group">
+                    <label>What should we call you?</label>
+                    <input type="text" class="form-control" formControlName="username" value="Enter username here.">
+                    <p *ngIf="registerForm.controls.username.errors" class="alert alert-danger">This feild is required.</p>
+                </div>
+                <button type="submit" (click)="submitted=true" class="btn btn-primary">Submit</button>
+            </form>
+        </div>
+</div>
