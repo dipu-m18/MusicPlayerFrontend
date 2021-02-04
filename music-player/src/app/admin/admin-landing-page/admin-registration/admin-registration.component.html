@@ -3,7 +3,7 @@
 </div>
 <div>
     <div>
-        Sign up for free to start listening
+        Sign up for free to start listening<br>
         <!-- <button type="button" class="btn btn-primary">Sign up Facebook</button> -->
         <button type="button" class="btn btn-dark">SIGN UP WITH GOOGLE</button>
          <br>
@@ -11,23 +11,30 @@
     OR
     <br>
         <div>
-            <form [formGroup]="registerForm" >
+            <form [formGroup]="registerForm" (ngSubmit)="register()" class="form">
                 <div class="form-group">
                     <label>What's your email?</label>
-                    <input type="email" class="form-control" formControlName="email" value="Enter your email here.">
-                    <p *ngIf="registerForm.controls.email.errors" class="alert alert-danger">The feild is required</p>
+                    <input type="text" class="form-control" formControlName="email" value="Enter your email here.">
+                    <span class="error-message" *ngIf="registerForm.controls.email.invalid && registerForm.controls.email.touched">The feild is required</span>
                 </div>
                 <div class="form-group">
                     <label>Create Password</label>
-                    <input type="password" class="form-control" formControlName="password" value="Create a password here.">
-                    <p *ngIf="registerForm.controls.password.errors" class="alert aler-danger">The field is mandatory</p>
+                    <input type="password" class="form-control" formControlName="pass" >
+                    <span class="error-message" *ngIf="registerForm.controls.pass.invalid && registerForm.controls.pass.touched" class="alert alert-danger">The feild is required</span>
                 </div>
                 <div class="form-group">
                     <label>What should we call you?</label>
                     <input type="text" class="form-control" formControlName="username" value="Enter username here.">
-                    <p *ngIf="registerForm.controls.username.errors" class="alert alert-danger">This feild is required.</p>
-                </div>
-                <button type="submit" (click)="submitted=true" class="btn btn-primary">Submit</button>
+                    <span class="error-message" *ngIf="registerForm.controls.username.invalid && registerForm.controls.username.touched" class="alert alert-danger">The feild is required</span>
+                 </div>
+                <button type="submit" class="btn btn-primary" [disabled]="!registerForm.valid">Submit</button>
             </form>
+            <div *ngIf="errorMessage!=null">
+                <span class="text-danger">{{errorMessage}}</span>
+            </div>
+            <div *ngIf="successMessage!=null">
+                <span class="text-success">{{successMessage}}</span>
+            </div>
+            <div class="text-info">Are you a registered seller? <a routerLink="../login">Sign in</a></div>
         </div>
 </div>

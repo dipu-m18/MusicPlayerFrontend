@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { logging } from 'protractor';
 
 @Component({
   selector: 'app-admin-registration',
@@ -10,22 +11,22 @@ export class AdminRegistrationComponent implements OnInit {
 
   registerForm:FormGroup;
   submitted=false;
+  errorMessage:string="";
+  successMessage:string="";
+
   constructor(private formBuilder: FormBuilder) { 
     this.registerForm = this.formBuilder.group({
-
-    });
-  }
-  
-  ngOnInit(): void {
-    this.registerForm = this.formBuilder.group({
-      email: ['', validateEmail],
-      password: ['', Validators.required],
+      email: ['', [Validators.required, this.validateEmail]],
+      pass: ['', Validators.required],
       username: ['', Validators.required]
     });
   }
+  
+ 
+ngOnInit() {
 }
 
-function validateEmail(c: FormControl){
+ validateEmail(c: FormControl){
   let EMAIL_REGEXP = /^[\w._]+@[A-Za-z]+\.(com|co\.in|org)$/;
 
   return EMAIL_REGEXP.test(c.value) ? null : {
@@ -33,4 +34,10 @@ function validateEmail(c: FormControl){
       message: "Email is invalid"
     }
   };
+}
+
+ register(){
+  this.errorMessage="";
+  this.successMessage="";
+}
 }
