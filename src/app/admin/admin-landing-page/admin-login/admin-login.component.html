@@ -1,0 +1,39 @@
+<div class="logo">
+    <h1>Music Player</h1>
+</div>
+<div>
+    <div>
+        Login to start listening<br>
+        <!-- <button type="button" class="btn btn-primary">Sign up Facebook</button> -->
+        <button type="button" class="btn btn-dark">CONTINUE WITH GOOGLE</button>
+         <br>
+    </div>
+    OR
+    <br>
+        <div>
+            <form [formGroup]="loginForm" (ngSubmit)="login()" class="form">
+                <div class="form-group">
+                    <label>Email address or username</label>
+                    <input type="text" class="form-control" formControlName="email" value="Enter your email or username here.">
+                    <span class="error-message" *ngIf="loginForm.controls.email.invalid && loginForm.controls.email.touched">The feild is required</span>
+                </div>
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" class="form-control" formControlName="pass" >
+                    <span class="error-message" *ngIf="loginForm.controls.pass.invalid && loginForm.controls.pass.touched" class="alert alert-danger">The feild is required</span>
+                </div>
+               
+                <button type="submit" class="btn btn-primary" [disabled]="!loginForm.valid">LOG IN</button>
+            </form>
+            <div *ngIf="errorMessage!=null">
+                <span class="text-danger">{{errorMessage}}</span>
+            </div>
+            <div *ngIf="successMessage!=null">
+                <span class="text-success">{{successMessage}}</span>
+            </div>
+        </div>
+        <hr>
+        <div>
+            <span>Don't have any account?  <a routerLink="../register">SIGN UP FOR MUSIC PLAYER</a></span>
+        </div>
+</div>
