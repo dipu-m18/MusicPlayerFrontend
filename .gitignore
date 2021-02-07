@@ -10,7 +10,9 @@
 # dependencies
 /node_modules
 
+
 #api keys and tokens
+environments
 environment.ts
 environment.prod.ts
 

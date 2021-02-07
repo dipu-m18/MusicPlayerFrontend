@@ -1,20 +1,31 @@
 <div class="card" style="width:25rem">
     <div class="card-body">
-        <form [formGroup]="formTemplate" (submit)="onSubmit(formTemplate.value)">
+        <form [formGroup]="trackUpdateForm" (submit)="onSubmit()">
             <div class="form-group">
-                <label>Select the song to upload</label>
+                <label class="label-text-black">Select the song to upload</label>
                 <input type="file" accept="audio/mp3,audio/*;capture=microphone" class="form-control" formControlName="track" (change)="showPreviewTrack($event)" placeholder="Upload the track here...">
-                <div class="text-danger" *ngIf="isSubmitted && formControls.track.errors?.required">This feild is required.</div>
+                <div class="text-danger" *ngIf="isSubmitted && trackUpdateForm.controls.track.errors?.required">This feild is required.</div>
             </div>
             <div class="form-group">
-                <label>Enter the track name</label>
+                <label class="label-text-black">Enter the track name</label>
                 <input type="text"  class="form-control" formControlName="trackName" [(ngModel)]="trackName" placeholder="Enter the track name here...">
-                <div class="text-danger" *ngIf="isSubmitted && formControls.trackName.errors?.required">This feild is required.</div>
+                <div class="text-danger" *ngIf="isSubmitted && trackUpdateForm.controls.trackName.errors?.required">This feild is required.</div>
             </div>
             <div class="form-group">
-                <label>Select the image to upload</label>
+                <label class="label-text-black">Select the image to upload</label>
                 <input type="file" [accept]="[ '.jpg', '.jpeg','.png',]" class="form-control" formControlName="image" (change)="showPreviewImage($event)" placeholder="Upload the image here...">
-                <div class="text-danger" *ngIf="isSubmitted && formControls.image.errors?.required">This feild is required.</div>
+                <div class="text-danger" *ngIf="isSubmitted && trackUpdateForm.controls.image.errors?.required">This feild is required.</div>
+            </div>
+            
+            <div class="form-group">
+                <label class="label-text-black">Enter album name</label>
+                <input type="text" class="form-control" formControlName="album" placeholder="Enter the album name here...">
+                <div class="text-danger" *ngIf="isSubmitted && trackUpdateForm.controls.artists.errors?.required">This feild is required.</div>
+            </div>
+            <div class="form-group">
+                <label class="label-text-black">Enter artists</label>
+                <input type="text" class="form-control" formControlName="artists" placeholder="Enter the artists here...">
+                <div class="text-danger" *ngIf="isSubmitted && trackUpdateForm.controls.artists.errors?.required">This feild is required.</div>
             </div>
             <div class="form-group">
                 <button type="submit" class="btn btn-success float-right">Submit</button>
