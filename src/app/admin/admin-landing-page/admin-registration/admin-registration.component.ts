@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import {FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import {FormBuilder, FormControl, FormGroup, Validators,FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { logging } from 'protractor';
+import { Admin } from "../../../shared/models/admin";
+import { AdminRegistrationService} from "../admin-registration/admin-registration.service";
+import { RegisterValidators } from "../../../shared/validators/admin.validator";
+import { environment } from "../../../../environments/environment";
 
 @Component({
   selector: 'app-admin-registration',
@@ -9,35 +13,61 @@ import { logging } from 'protractor';
 })
 export class AdminRegistrationComponent implements OnInit {
 
+  admin: Admin;
   registerForm:FormGroup;
   submitted=false;
   errorMessage:string="";
   successMessage:string="";
 
-  constructor(private formBuilder: FormBuilder) { 
-    this.registerForm = this.formBuilder.group({
-      email: ['', [Validators.required, this.validateEmail]],
-      pass: ['', Validators.required],
-      username: ['', Validators.required]
-    });
+  constructor(private formBuilder: FormBuilder, private adminRegistrationService: AdminRegistrationService) { 
   }
   
  
-ngOnInit() {
+ngOnInit() { 
+  this.admin =new Admin();
+  this.createForm();
 }
 
- validateEmail(c: FormControl){
-  let EMAIL_REGEXP = /^[\w._]+@[A-Za-z]+\.(com|co\.in|org)$/;
+createForm(){
+  this.registerForm = this.formBuilder.group({
+    email: ['', [Validators.required, RegisterValidators.validateEmailId]],
+    pass: ['', Validators.required, RegisterValidators.validatePassword],
+    passConfirm: ['', Validators.required, RegisterValidators.validatePassword],
+    username: ['', Validators.required],
+    key: ['', Validators.required]
+  });
+  }
 
-  return EMAIL_REGEXP.test(c.value) ? null : {
-    emailError: {
-      message: "Email is invalid"
-    }
-  };
+reset(){
+  this.errorMessage='';
+  this.successMessage=''
+  this.registerForm.reset();
+  
 }
 
  register(){
   this.errorMessage="";
   this.successMessage="";
-}
+  //this.admin= this.registerForm.value as Admin;
+  this.admin.emailId = this.registerForm.value.email;
+  this.admin.name = this.registerForm.value.username;
+  this.admin.password= this.registerForm.value.pass;
+  console.log("ssss");
+  console.log(this.admin);
+  if(this.registerForm.value.key == environment.registerKey){
+    this.adminRegistrationService.registerAdmin(this.admin).subscribe(
+      (response: any) => {
+        console.log(response);
+        this.successMessage=response;
+        this.reset();
+      },
+      (error: any) => this.errorMessage = <any>error
+    )
+  }else {
+    this.errorMessage="Invalid Key";
+  }
+  
+ }
+
+
 }

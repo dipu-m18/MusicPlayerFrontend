@@ -1,0 +1,31 @@
+.carousel{
+	margin-left: 30%;
+}
+.carousel-item {
+-webkit-transform-style: preserve-3d;
+-moz-transform-style: preserve-3d;
+transform-style: preserve-3d;
+}
+
+.carousel-caption {
+	/* margin: 0 auto; */
+top: 50%;
+transform: translateY(-50%);
+bottom: initial;
+}
+
+/* .carousel-caption {
+	top: 400px;
+} */
+.carousel-caption h5 {
+	/* font-size: 45px; */
+	text-transform: uppercase;
+	/* letter-spacing: 2px; */
+	/* margin-top: 25px; */
+}
+.carousel-caption p {
+	/* width: 75%; */
+	margin: 0 auto;
+	/* font-size: 18px;
+	line-height: 1.9; */
+}

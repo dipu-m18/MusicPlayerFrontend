@@ -1,0 +1,83 @@
+<!--  -->
+<div class="card" *ngIf="!isSubmitted">
+    <div class="card-body">
+        <form [formGroup]="trackUpdateForm" (ngSubmit)="onSubmit()" class="form">
+           <div class="row">
+            <div class="col-md-6">
+            <div class="form-group">
+                <label class="label-text-black">Select the song to upload</label>
+                <input type="file" accept="audio/mp3,audio/*;capture=microphone" class="form-control" formControlName="track" (change)="showPreviewTrack($event)" placeholder="Upload the track here...">
+                <div class="text-danger" *ngIf="trackUpdateForm.controls.track.invalid && trackUpdateForm.controls.track.touched">This feild is required.</div>
+            </div>
+            <div class="form-group">
+                <label class="label-text-black">Enter the track name</label>
+                <input type="text"  class="form-control" formControlName="trackName" [(ngModel)]="trackName" placeholder="Enter the track name here...">
+                <div class="text-danger" *ngIf="trackUpdateForm.controls.trackName.invalid && trackUpdateForm.controls.trackName.touched">This feild is required.</div>
+            </div>
+            <div class="form-group">
+                <label class="label-text-black">Select the image to upload</label>
+                <input type="file" [accept]="[ '.jpg', '.jpeg','.png',]" class="form-control" formControlName="image" (change)="showPreviewImage($event)" placeholder="Upload the image here...">
+                <div class="text-danger" *ngIf="trackUpdateForm.controls.image.invalid && trackUpdateForm.controls.image.touched">This feild is required.</div>
+            </div>
+            
+            <div class="form-group">
+                <label class="label-text-black">Enter album name</label>
+                <input type="text" class="form-control" formControlName="album" placeholder="Enter the album name here...">
+                <div class="text-danger" *ngIf="trackUpdateForm.controls.album.invalid && trackUpdateForm.controls.album.touched">This feild is required.</div>
+            </div>
+            <div class="form-group">
+                <label class="label-text-black">Enter Genre</label>
+                <input type="text" class="form-control" formControlName="genre" placeholder="Enter the genre here...">
+                <div class="text-danger" *ngIf="trackUpdateForm.controls.genre.invalid && trackUpdateForm.controls.genre.touched">This feild is required.</div>
+            </div>
+            
+           </div>
+           
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label class="label-text-black">Enter artists</label>
+                    <input type="text" class="form-control" formControlName="artists" placeholder="Enter the artists here...">
+                    <div class="text-danger" *ngIf="trackUpdateForm.controls.artists.invalid && trackUpdateForm.controls.artists.touched">This feild is required.</div>
+                </div>
+                <div class="form-group">
+                    <label class="label-text-black">Enter performedBy</label>
+                    <input type="text" class="form-control" formControlName="performedBy" placeholder="Enter the performers here...">
+                    <div class="text-danger" *ngIf="trackUpdateForm.controls.performedBy.invalid && trackUpdateForm.controls.performedBy.touched">This feild is required.</div>
+                </div>
+                <div class="form-group">
+                    <label class="label-text-black">Enter by whom track is written</label>
+                    <input type="text" class="form-control" formControlName="writtenBy" placeholder="Enter the writters here...">
+                    <div class="text-danger" *ngIf="trackUpdateForm.controls.writtenBy.invalid && trackUpdateForm.controls.writtenBy.touched">This feild is required.</div>
+                </div>
+                <div class="form-group">
+                    <label class="label-text-black">Enter by whom the track is produced </label>
+                    <input type="text" class="form-control" formControlName="producedBy" placeholder="Enter the producers here...">
+                    <div class="text-danger" *ngIf="trackUpdateForm.controls.producedBy.invalid && trackUpdateForm.controls.producedBy.touched">This feild is required.</div>
+                </div>
+                <div class="form-group">
+                    <label class="label-text-black">Enter sources</label>
+                    <input type="text" class="form-control" formControlName="source" placeholder="Enter the sources here...">
+                    <div class="text-danger" *ngIf="trackUpdateForm.controls.source.invalid && trackUpdateForm.controls.source.touched">This feild is required.</div>
+                </div>
+                
+            </div>
+            <div class="form-group btnn">
+                <button type="submit" class="btn btn-success">Submit</button>
+            </div>
+        </div> 
+        </form>
+        <div *ngIf="errorMessage!=null || errorMessage!=''">
+            <span class="text-danger">{{errorMessage}}</span>
+        </div>
+    </div>
+</div>
+
+<div class="card card2" *ngIf="isSubmitted &&  message!=''">
+    <div class="card-body">
+        <span class="text-success">{{message}}</span><br>
+        The track was sucessfull added. <br>
+        <button type="submit"  class="col-md-4 offset-md-2 btn btn-info" (click)="resetForm()">
+            Reset
+        </button>
+    </div>
+</div>

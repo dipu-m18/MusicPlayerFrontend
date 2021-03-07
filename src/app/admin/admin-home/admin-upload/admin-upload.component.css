@@ -1,0 +1,24 @@
+.containerr{
+    margin-top:4%;
+}
+
+.card{
+    margin-top: 5%;
+    margin-left: 7%;
+    background-color: #181818;
+    color: white;
+    max-width: 900px;
+}
+
+input{
+    background-color: #181818;
+}
+
+.btnn{
+    padding-left: 42%;
+}
+
+.card2{
+    margin-top: 40% ;
+    text-align: center;
+}

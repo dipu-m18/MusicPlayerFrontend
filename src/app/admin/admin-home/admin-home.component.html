@@ -1,35 +1,40 @@
-<div class="card" style="width:25rem">
-    <div class="card-body">
-        <form [formGroup]="trackUpdateForm" (submit)="onSubmit()">
-            <div class="form-group">
-                <label class="label-text-black">Select the song to upload</label>
-                <input type="file" accept="audio/mp3,audio/*;capture=microphone" class="form-control" formControlName="track" (change)="showPreviewTrack($event)" placeholder="Upload the track here...">
-                <div class="text-danger" *ngIf="isSubmitted && trackUpdateForm.controls.track.errors?.required">This feild is required.</div>
-            </div>
-            <div class="form-group">
-                <label class="label-text-black">Enter the track name</label>
-                <input type="text"  class="form-control" formControlName="trackName" [(ngModel)]="trackName" placeholder="Enter the track name here...">
-                <div class="text-danger" *ngIf="isSubmitted && trackUpdateForm.controls.trackName.errors?.required">This feild is required.</div>
-            </div>
-            <div class="form-group">
-                <label class="label-text-black">Select the image to upload</label>
-                <input type="file" [accept]="[ '.jpg', '.jpeg','.png',]" class="form-control" formControlName="image" (change)="showPreviewImage($event)" placeholder="Upload the image here...">
-                <div class="text-danger" *ngIf="isSubmitted && trackUpdateForm.controls.image.errors?.required">This feild is required.</div>
-            </div>
-            
-            <div class="form-group">
-                <label class="label-text-black">Enter album name</label>
-                <input type="text" class="form-control" formControlName="album" placeholder="Enter the album name here...">
-                <div class="text-danger" *ngIf="isSubmitted && trackUpdateForm.controls.artists.errors?.required">This feild is required.</div>
-            </div>
-            <div class="form-group">
-                <label class="label-text-black">Enter artists</label>
-                <input type="text" class="form-control" formControlName="artists" placeholder="Enter the artists here...">
-                <div class="text-danger" *ngIf="isSubmitted && trackUpdateForm.controls.artists.errors?.required">This feild is required.</div>
-            </div>
-            <div class="form-group">
-                <button type="submit" class="btn btn-success float-right">Submit</button>
-            </div>
-        </form>
-    </div>
+<div class="row">
+<nav class="navbar navbar-expand-lg navbar-light fixed-top">
+  <div class="container">
+      <a class="navbar-brand" href="#">Music Streamer</a> <button aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler" data-target="#navbarSupportedContent" data-toggle="collapse" type="button"><span class="navbar-toggler-icon"></span></button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav ml-auto">
+              <li class="nav-item active">
+                  <a class="nav-link" routerLink="home" routerLinkActive="active" >Home</a>
+              </li>
+              <li class="nav-item">
+                  <a class="nav-link" routerLink="songs" routerLinkActive="active" >Songs</a>
+              </li>
+              <li class="nav-item">
+                  <a class="nav-link" href="music" routerLinkActive="active"  >Music</a>
+              </li>
+              <li class="nav-item">
+                  <a class="nav-link" routerLink="upload" routerLinkActive="active"  >Upload</a>
+              </li>
+              
+              <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Dipannita
+                  </a>
+                  <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="#">Update Profile</a>
+                    <a class="dropdown-item" href="#">Change Password</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="#">Log Out</a>
+                  </div>
+                </li>
+          </ul>
+      </div>
+  </div>
+</nav>
+
+  <div class="containerr">
+          <router-outlet></router-outlet>
+   </div>
 </div>
+

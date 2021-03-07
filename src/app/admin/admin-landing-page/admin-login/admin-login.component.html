@@ -14,7 +14,7 @@
             <form [formGroup]="loginForm" (ngSubmit)="login()" class="form">
                 <div class="form-group">
                     <label>Email address or username</label>
-                    <input type="text" class="form-control" formControlName="email" value="Enter your email or username here.">
+                    <input type="text" class="form-control" formControlName="email" >
                     <span class="error-message" *ngIf="loginForm.controls.email.invalid && loginForm.controls.email.touched">The feild is required</span>
                 </div>
                 <div class="form-group">
@@ -23,12 +23,13 @@
                     <span class="error-message" *ngIf="loginForm.controls.pass.invalid && loginForm.controls.pass.touched" class="alert alert-danger">The feild is required</span>
                 </div>
                
-                <button type="submit" class="btn btn-primary" [disabled]="!loginForm.valid">LOG IN</button>
+                <button type="submit" class="btn btn-primary" >LOG IN</button>
+                <button type="reset" [disabled]="loginForm.pristine" class="btn btn-warning" (click)="reset()">Reset</button>
             </form>
-            <div *ngIf="errorMessage!=null">
+            <div *ngIf="errorMessage!=null || errorMessage!=''">
                 <span class="text-danger">{{errorMessage}}</span>
             </div>
-            <div *ngIf="successMessage!=null">
+            <div *ngIf="successMessage!=null || successMessage!=''">
                 <span class="text-success">{{successMessage}}</span>
             </div>
         </div>

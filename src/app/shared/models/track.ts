@@ -1,9 +1,15 @@
 export class Track{
-    trackUrl: string | undefined;
-    imageUrl: string | undefined;
-    artists: string[] | undefined;
-    performedBy: string[] | undefined;
-    writtenBy: string[] | undefined;
-    producedBy: string[] | undefined;
-    source: string[] | undefined;
+    name: string;
+    trackId: number;
+    genre: string; //genre
+    trackUrl: string;
+    imageUrl: string;
+    artists: string;
+    performedBy: string;
+    writtenBy: string;
+    producedBy: string;
+    source: string;
+    adminEmailId: string;
+    errorMessage: string;
+    successMessage: string;
 }

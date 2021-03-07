@@ -14,7 +14,7 @@
             <form [formGroup]="registerForm" (ngSubmit)="register()" class="form">
                 <div class="form-group">
                     <label>What's your email?</label>
-                    <input type="text" class="form-control" formControlName="email" value="Enter your email here.">
+                    <input type="text" class="form-control" formControlName="email">
                     <span class="error-message" *ngIf="registerForm.controls.email.invalid && registerForm.controls.email.touched">The feild is required</span>
                 </div>
                 <div class="form-group">
@@ -23,16 +23,34 @@
                     <span class="error-message" *ngIf="registerForm.controls.pass.invalid && registerForm.controls.pass.touched" class="alert alert-danger">The feild is required</span>
                 </div>
                 <div class="form-group">
+                    <label>Confirm Password</label>
+                    <input type="password" class="form-control" formControlName="passConfirm" >
+                    <span class="error-message" *ngIf="registerForm.controls.pass.invalid && registerForm.controls.pass.touched" class="alert alert-danger">The feild is required</span>
+                </div>
+                <div class="form-group">
                     <label>What should we call you?</label>
-                    <input type="text" class="form-control" formControlName="username" value="Enter username here.">
+                    <input type="text" class="form-control" formControlName="username" >
                     <span class="error-message" *ngIf="registerForm.controls.username.invalid && registerForm.controls.username.touched" class="alert alert-danger">The feild is required</span>
                  </div>
-                <button type="submit" class="btn btn-primary" [disabled]="!registerForm.valid">Submit</button>
-            </form>
-            <div *ngIf="errorMessage!=null">
+                 <div class="form-group">
+                    <label>Enter the Key:</label>
+                    <input type="number" class="form-control" formControlName="key">
+                    <span class="error-message" *ngIf="registerForm.controls.key.invalid && registerForm.controls.key.touched" class="alert alert-danger">The feild is required</span>
+                 </div>
+                 <div class="row">
+                    <button  class="col-md-4 offset-md-1 btn btn-info">
+                        Register
+                    </button>
+                    <button type="reset" [disabled]="registerForm.pristine" class="col-md-4 offset-md-2 btn btn-warning" (click)="reset()">
+                        Reset
+                    </button>
+
+                </div>
+                 </form>
+            <div *ngIf="errorMessage!=null || errorMessage!=''">
                 <span class="text-danger">{{errorMessage}}</span>
             </div>
-            <div *ngIf="successMessage!=null">
+            <div *ngIf="successMessage!=null || successMessage!=''">
                 <span class="text-success">{{successMessage}}</span>
             </div>
             <div class="text-info">Are you a registered seller? <a routerLink="../login">Sign in</a></div>
