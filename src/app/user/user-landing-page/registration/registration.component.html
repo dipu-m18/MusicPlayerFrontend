@@ -1,0 +1,58 @@
+<div class="logo">
+    <h1>Music Player</h1>
+</div>
+<div>
+    <div>
+        Sign up for free to start listening<br>
+        <!-- <button type="button" class="btn btn-primary">Sign up Facebook</button> -->
+        <button type="button" class="btn btn-dark">SIGN UP WITH GOOGLE</button>
+         <br>
+    </div>
+    OR
+    <br>
+        <div>
+            <form [formGroup]="registerForm" (ngSubmit)="registerUser()" class="form">
+                <div class="form-group">
+                    <label>What's your email?</label>
+                    <input type="text" class="form-control" formControlName="emailId">
+                    <span class="error-message" *ngIf="registerForm.controls.emailId.invalid && registerForm.controls.emailId.touched">The feild is required</span>
+                </div>
+                <div class="form-group">
+                    <label>What's your name?</label>
+                    <input type="text" class="form-control" formControlName="name">
+                    <span class="error-message" *ngIf="registerForm.controls.name.invalid && registerForm.controls.name.touched">The feild is required</span>
+                </div>
+                <div class="form-group">
+                    <label>Create Password</label>
+                    <input type="password" class="form-control" formControlName="password" >
+                    <span class="error-message" *ngIf="registerForm.controls.password.invalid && registerForm.controls.password.touched" class="alert alert-danger">The feild is required</span>
+                </div>
+                <div class="form-group">
+                    <label>Confirm Password</label>
+                    <input type="password" class="form-control" formControlName="confirmPassword" >
+                    <span class="error-message" *ngIf="registerForm.controls.confirmPassword.invalid && registerForm.controls.confirmPassword.touched" class="alert alert-danger">The feild is required</span>
+                </div>
+                <div class="form-group">
+                    <label>Phone Number</label>
+                    <input type="password" class="form-control" formControlName="confirmPassword" >
+                    <span class="error-message" *ngIf="registerForm.controls.confirmPassword.invalid && registerForm.controls.confirmPassword.touched" class="alert alert-danger">The feild is required</span>
+                </div>
+                 <div class="row">
+                    <button  class="col-md-4 offset-md-1 btn btn-info">
+                        Register
+                    </button>
+                    <button type="reset" [disabled]="registerForm.pristine" class="col-md-4 offset-md-2 btn btn-warning" (click)="reset()">
+                        Reset
+                    </button>
+
+                </div>
+                 </form>
+            <div *ngIf="errorMessage!=null || errorMessage!=''">
+                <span class="text-danger">{{errorMessage}}</span>
+            </div>
+            <div *ngIf="successMessage!=null || successMessage!=''">
+                <span class="text-success">{{successMessage}}</span>
+            </div>
+            <div class="text-info">Are you a registered seller? <a routerLink="../login">Sign in</a></div>
+        </div>
+</div>

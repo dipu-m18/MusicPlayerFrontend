@@ -4,7 +4,6 @@ export class Track{
     genre: string; //genre
     trackUrl: string;
     imageUrl: string;
-    artists: string;
     performedBy: string;
     writtenBy: string;
     producedBy: string;

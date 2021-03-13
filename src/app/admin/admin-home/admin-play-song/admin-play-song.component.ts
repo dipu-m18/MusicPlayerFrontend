@@ -13,7 +13,7 @@ export class AdminPlaySongComponent implements OnInit {
   constructor() { 
     this.track= history.state.data;
     this.trackUrl = history.state.data.trackUrl;
-    console.log("history "+this.track.artists);
+    console.log("history "+this.track.performedBy);
 
   }
 

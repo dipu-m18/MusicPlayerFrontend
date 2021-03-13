@@ -11,7 +11,7 @@ import { AdminPlaySongComponent } from './admin/admin-home/admin-play-song/admin
 
 const routes: Routes = [
   {path: 'error', component: AuthorisationErrorComponent},
-   {path: '', redirectTo: '/applicationHome/', pathMatch:'full'},
+   {path: '', redirectTo: '/applicationHome/login', pathMatch:'full'},
   // {path : 'admin', component:AdminHomeComponent, children: [
   //   {path: 'home', component: AdminActualHomeComponent},
   //   {path: 'upload', component: AdminUploadComponent},

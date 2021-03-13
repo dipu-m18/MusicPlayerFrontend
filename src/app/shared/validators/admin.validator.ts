@@ -28,4 +28,16 @@ export class RegisterValidators{
              return null;
          };
      }
+
+     static validatePhoneNumber(control: AbstractControl): any {
+        let pattern1: RegExp = /^\d{10}$/;
+
+        let value = control.value;
+        let matches: boolean = pattern1.test(value);
+
+        if (!matches) {
+            return { "phoneNumberError": true }
+        }
+        return null;
+    }
 }

@@ -22,14 +22,15 @@
   </div> -->
 
   <div class="container" *ngIf="!submitted">
+    <div class="heading">All Tracks</div>
     <div class="row">
-      <div class="col-md-3"  *ngFor="let file of files; let i = index ">
+      <div class="col-md-2"  *ngFor="let file of files; let i = index ">
         <a  class="album-poster" data-switch="3">
           <img [src]="file.imageUrl"  (click)="openFile(file, i);">
         </a>
         <h4>{{file.name}}</h4>
         <p>{{file.performedBy}} </p>
-        <button class="button remove" (click)="removeTrack(file)">Remove</button>
+        <!-- <button class="button remove" (click)="removeTrack(file)">Remove</button> -->
       </div>
     </div>
   </div>
@@ -63,7 +64,7 @@
 
      <!--- song title & artist name --->
     <p id="title">{{trackName}}</p>
-    <p id="artist">{{performedBy}}</p>
+    <p id="artist">{{artist}}</p>
 
     <!--- middle part --->
          <div class="middle">
@@ -86,6 +87,7 @@
 
 </div>
 </div>
+
 
 
 

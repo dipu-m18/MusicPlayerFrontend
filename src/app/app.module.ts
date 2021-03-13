@@ -22,11 +22,21 @@ import { AdminUploadComponent } from './admin/admin-home/admin-upload/admin-uplo
 import { AdminSongsComponent } from './admin/admin-home/admin-songs/admin-songs.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule } from '@angular/router';
+import { RoutingGuard} from './app.routing-guard';
+import { UserHomeComponent } from './user/user-home/user-home.component';
+import { UserLandingPageComponent } from './user/user-landing-page/user-landing-page.component';
+import { LoginComponent } from './user/user-landing-page/login/login.component';
+import { RegistrationComponent } from './user/user-landing-page/registration/registration.component';
+import { UserModule } from './user/user.module';
 ////////////////////////////////////////////////////////////////////
 
 @NgModule({
   declarations: [
     AppComponent,
+    UserHomeComponent,
+    UserLandingPageComponent,
+    LoginComponent,
+    RegistrationComponent,
   ],
   imports: [
     BrowserModule,
@@ -40,9 +50,10 @@ import { RouterModule } from '@angular/router';
     AngularFirestoreModule, // firestore
     AngularFireAuthModule, // auth
     AngularFireStorageModule, BrowserAnimationsModule, // storage,
-    AdminModule
+    AdminModule,
+    UserModule
   ],
-  providers: [],
+  providers: [RoutingGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

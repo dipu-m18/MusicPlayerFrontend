@@ -20,11 +20,7 @@
                 <div class="text-danger" *ngIf="trackUpdateForm.controls.image.invalid && trackUpdateForm.controls.image.touched">This feild is required.</div>
             </div>
             
-            <div class="form-group">
-                <label class="label-text-black">Enter album name</label>
-                <input type="text" class="form-control" formControlName="album" placeholder="Enter the album name here...">
-                <div class="text-danger" *ngIf="trackUpdateForm.controls.album.invalid && trackUpdateForm.controls.album.touched">This feild is required.</div>
-            </div>
+            
             <div class="form-group">
                 <label class="label-text-black">Enter Genre</label>
                 <input type="text" class="form-control" formControlName="genre" placeholder="Enter the genre here...">
@@ -34,11 +30,7 @@
            </div>
            
             <div class="col-md-6">
-                <div class="form-group">
-                    <label class="label-text-black">Enter artists</label>
-                    <input type="text" class="form-control" formControlName="artists" placeholder="Enter the artists here...">
-                    <div class="text-danger" *ngIf="trackUpdateForm.controls.artists.invalid && trackUpdateForm.controls.artists.touched">This feild is required.</div>
-                </div>
+                
                 <div class="form-group">
                     <label class="label-text-black">Enter performedBy</label>
                     <input type="text" class="form-control" formControlName="performedBy" placeholder="Enter the performers here...">

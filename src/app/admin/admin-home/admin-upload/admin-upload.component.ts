@@ -43,9 +43,7 @@ export class AdminUploadComponent implements OnInit {
       track: ['', Validators.required],
       trackName: ['', Validators.required],
       image: ['', Validators.required],
-      album: ['', Validators.required],
       genre: ['', Validators.required],
-      artists: ['', Validators.required],
       performedBy: ['', Validators.required],
       writtenBy: ['', Validators.required],
       producedBy: ['', Validators.required],
@@ -74,7 +72,6 @@ export class AdminUploadComponent implements OnInit {
         console.log(this.trackUpdateForm);
         this.trackToAdd.name= this.trackUpdateForm.value.trackName;
         this.trackToAdd.genre = this.trackUpdateForm.value.genre;
-        this.trackToAdd.artists = this.trackUpdateForm.value.artists;
         this.trackToAdd.performedBy = this.trackUpdateForm.value.performedBy;
         this.trackToAdd.writtenBy = this.trackUpdateForm.value.writtenBy;
         this.trackToAdd.producedBy = this.trackUpdateForm.value.producedBy;

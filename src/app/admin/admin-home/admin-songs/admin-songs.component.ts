@@ -21,9 +21,9 @@ export class AdminSongsComponent implements OnInit {
   state: StreamState;
   currentFile: any={};
   submitted: boolean = false;
-  artist: string;
   trackName: string;
   imageUrl: string;
+  performedBy: string;
   index: number;
   value: number;
   showVolume:number=1;
@@ -150,10 +150,10 @@ export class AdminSongsComponent implements OnInit {
   openFile(file: any, index: number){
       this.submitted=true;
       //this.currentFile=file
-      
-      this.artist=file.artists
+    
       this.trackName=file.name
       this.imageUrl=file.imageUrl
+      this.performedBy=file.performedBy
       this.index=index
       this.currentFile = { index, file }
       console.log("pppppppppppppp "+this.currentFile);
