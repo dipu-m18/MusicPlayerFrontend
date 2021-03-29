@@ -1,24 +1,25 @@
 import { Component, OnInit } from '@angular/core';
+import {DataService} from '../../shared/data.service';
 import  { Router } from '@angular/router';
 import { User } from 'src/app/shared/models/user';
-import { StreamState } from '../../../shared/interfaces/stream-state';
-import {Track} from '../../../shared/models/track';
-import { AudioService } from './../../../admin/../admin/admin-home/admin-songs/audio.services';
-import { TracksService } from './tracks.service';
-import { LikedTrack } from '../../../shared/models/likedTrack';
+import { StreamState } from '../../shared/interfaces/stream-state';
+import {Track} from '../../shared/models/track';
+import { AudioService } from './../../admin/admin-home/admin-songs/audio.services';
+import { TracksService } from './../user-home/tracks/tracks.service';
+import { LikedTrack } from '../../shared/models/likedTrack';
 
-import {DataService} from '../../../shared/data.service';
 
 @Component({
-  selector: 'app-tracks',
-  templateUrl: './tracks.component.html',
-  styleUrls: ['./tracks.component.css']
+  selector: 'app-user-play-song',
+  templateUrl: './user-play-song.component.html',
+  styleUrls: ['./user-play-song.component.css']
 })
-export class TracksComponent implements OnInit {
+export class UserPlaySongComponent implements OnInit {
   i:number =1;
    state: StreamState;
    currentFile: any={};
    submitted: boolean = false;
+   track:Track;
    trackName: string;
    imageUrl: string;
    index: number;
@@ -34,89 +35,58 @@ export class TracksComponent implements OnInit {
 
    playScreen: boolean = true;
   creditScreen: boolean =false;
+  lyricsScreen:boolean =false
   performedByArray: string[];
   SourceArray: string[];
   WrittenByArray: string[];
   ProducedByArray: string[];
   Genre:string;
 
-
-
-
-  //  likedTrack: LikedTrack[];
-   ////////////////////////////
   constructor(private router: Router, 
     private audioService: AudioService,
     private tracksService: TracksService,
-    private dataService: DataService,
-    ) { 
+    private dataService: DataService) { 
       this.audioService.getState()
       .subscribe(state => {
         this.state= state
       });
-
     }
-
 
   ngOnInit(): void {
-    const userJson=sessionStorage.getItem("user")
-    this.user = userJson!=null? JSON.parse(userJson) : new User();
-    this.getTrackList();
+    this.files = this.dataService.sharedFiles
+    this.trackName = this.dataService.sharedTrack.name;
+    this.track= this.dataService.sharedTrack
+    this.imageUrl= this.dataService.sharedTrack.imageUrl;
+    this.index= this.dataService.sharedIndex;
+    this.liked= false;
+    this.playStream(this.track, this.index)
   }
 
- 
-
-  getTrackList(){
-    if(this.user.emailId!=null){
-      this.tracksService.getTrackList()
-      .subscribe(tracks => {
-        this.dataService.sharedFiles=tracks
-        this.files =tracks;
-          
-        console.log(this.files)
-      })
-    }
-    // if(this.user.emailId!=null){
-    //   this.tracksService.getLikedTrackList(this.user.emailId)
-    //   .subscribe(likedTracks => {
-    //     this.likedTrack =likedTracks;
-    //     console.log(this.likedTrack)
-    //   })
-    // }
-  }
-
-  openFile(file: any, index: number){
-    this.dataService.sharedTrack =file
-    this.dataService.sharedIndex=index
-      this.submitted=true;
-      this.liked =false;
-      this.trackName=file.name
-      this.imageUrl=file.imageUrl
-      this.index=index
-      this.currentFile = { index, file }
-      this.performedByArray =file.performedBy.split(", ")
-      console.log(file.performedBy.split(", "))
+  playStream(track:Track, index:number){
+    const url: any = track.trackUrl
+    this.trackName = track.name;
+    this.track= track
+    this.imageUrl= track.imageUrl;
+    this.index= index;
+    this.performedByArray =track.performedBy.split(", ")
+      console.log(track.performedBy.split(", "))
       for(var x in this.performedByArray){
           console.log(this.performedByArray[x]);
       }
-      this.SourceArray = file.source.split(", ")
-      this.WrittenByArray = file.writtenBy.split(", ")
-      this.ProducedByArray = file.producedBy.split(", ")
-      this.Genre = file.genre
+      this.SourceArray = track.source.split(", ")
+      this.WrittenByArray = track.writtenBy.split(", ")
+      this.ProducedByArray = track.producedBy.split(", ")
+      this.Genre = track.genre
       this.audioService.stop();
-      this.playStream(file.trackUrl);
       if(this.state.volume!=null){
       this.showVolume= this.state.volume*10
-      }
-      this.router.navigate(['/playSong']);
-  }
-
-  playStream(url: any){
+    }
+  console.log(url)
     this.audioService.playStream(url)
       .subscribe((events: any) => {
         
       });
-  }
+}
 
   play(){
     this.audioService.play();
@@ -135,11 +105,11 @@ export class TracksComponent implements OnInit {
     if(this.isLastPlaying()){
       const index = 0;
       const file = this.files[index]
-      this.openFile(file, index);
+      this.playStream(file, index);
     }else{
-      const index = this.currentFile.index + 1;
+      const index = this.index + 1;
       const file = this.files[index]
-      this.openFile(file, index);
+      this.playStream(file, index);
     }
   }
 
@@ -147,20 +117,22 @@ export class TracksComponent implements OnInit {
     if(this.isFirstPlaying()){
       const index= this.files.length-1
      const file = this.files[index];
-     this.openFile(file, index);
+     this.playStream(file, index);
     }
-    else{const index= this.currentFile.index - 1;
+    else{const index= this.index - 1;
      const file = this.files[index];
-     this.openFile(file, index);
+     this.playStream(file, index);
     }
   }
 
   isFirstPlaying(){
-    return this.currentFile.index === 0;
+    return this.index === 0;
   }
 
   isLastPlaying(){
-    return this.currentFile.index === this.files.length - 1;
+    console.log(this.files)
+    // console.log("indexxxxx "+this.files.length)
+     return this.index === this.files.length - 1;
   }
 
   onSliderChangeEnd(change:any){
@@ -168,9 +140,9 @@ export class TracksComponent implements OnInit {
     this.audioService.seekTo(change.value);
     if(this.audioService.checkEnded()){
       if(this.autoPlay==1){
-        const index=this.currentFile.index+1;
+        const index=this.index+1;
         const file = this.files[index];
-        this.openFile(file, index);
+        this.playStream(file, index);
       }
     }
   }
@@ -205,21 +177,27 @@ export class TracksComponent implements OnInit {
   duration(){
     console.log("duration "+this.state.currentTime)
     if(this.audioService.checkEnded() && this.autoPlay==1){
-      const index=this.currentFile.index+1;
-      const file = this.files[index];
-      this.openFile(file, index);
+      const indexx=this.index+1;
+      const file = this.files[indexx];
+      this.playStream(file, indexx);
     }
   }
 
   changeScreen(i: any){
     console.log("iiiiiiiiiiiiii "+i)
-   if(i==1){
+   if(i==0){
      this.playScreen=true;
      this.creditScreen=false;
-   }else{
+     this.lyricsScreen=false;
+   }else if(i==1){
      this.playScreen=false;
      this.creditScreen=true;
-   }
+     this.lyricsScreen=false;
+   }else if(i==2){
+    this.playScreen=false;
+    this.creditScreen=false;
+    this.lyricsScreen=true;
+  }
  }
 
  likedTrack(){
@@ -231,7 +209,7 @@ export class TracksComponent implements OnInit {
   let likedTrack: LikedTrack = new LikedTrack();
   likedTrack.userEmailId = this.user.emailId;
   likedTrack.liked = true;
-  const index=this.currentFile.index;
+  const index=this.index;
   const file = this.files[index];
   likedTrack.track=file;
   likedTrack.likedTrackId= file.trackId
@@ -246,8 +224,5 @@ export class TracksComponent implements OnInit {
 }
 
   
- 
+
 }
-
-
-

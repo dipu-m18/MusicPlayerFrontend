@@ -2,6 +2,7 @@ import { HttpHeaders, HttpClient, HttpErrorResponse } from '@angular/common/http
 import { Injectable } from '@angular/core';
 import { Observable, throwError} from 'rxjs';
 import {catchError} from 'rxjs/internal/operators/catchError';
+import { LikedTrack } from '../../../shared/models/likedTrack';
 import { environment } from '../../../../environments/environment';
 import {Track } from '../../../shared/models/track';
 
@@ -17,6 +18,19 @@ private headers = new HttpHeaders({'Content-Type': 'application/json'});
     return this.http.get<Track[]>(url)
       .pipe(catchError(this.handleError));
   }
+
+  // LIKED TRACK LIST
+ 
+  
+
+  addToLikedTrackList(likedTrack: LikedTrack): Observable<LikedTrack>{
+    const url = environment.userTrackAPIUrl+"/addLikedTrack";
+    return this.http.post<LikedTrack>(url, likedTrack)
+      .pipe(catchError(this.handleError));
+
+  }
+
+  
 
   private handleError(err: HttpErrorResponse) {
     console.log(err)

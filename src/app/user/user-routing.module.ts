@@ -7,7 +7,7 @@ import { RegistrationComponent } from './user-landing-page/registration/registra
 import { UserLandingPageComponent} from './user-landing-page/user-landing-page.component';
 import { TracksComponent } from './user-home/tracks/tracks.component';
 import { LikedTracksComponent} from './user-home/liked-tracks/liked-tracks.component';
-
+import { UserPlaySongComponent } from './user-play-song/user-play-song.component';
 
 const routes: Routes = [
     { path: 'applicationHome', component: UserLandingPageComponent, children: [
@@ -15,6 +15,7 @@ const routes: Routes = [
         {path: 'login', component: LoginComponent},
         {path: 'register', component: RegistrationComponent}
     ]},
+    {path: 'playSong', component: UserPlaySongComponent},
     { path: 'home', component: UserHomeComponent, canActivate: [RoutingGuard], children: [
         {path: '', redirectTo: 'tracks', pathMatch: 'full'},
         {path: 'tracks', component: TracksComponent},

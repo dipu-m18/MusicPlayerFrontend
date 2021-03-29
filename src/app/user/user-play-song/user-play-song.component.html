@@ -1,60 +1,5 @@
-<!-- <div class="container" *ngIf="!submitted">
-    <div class="row">
-      <div class="col-md-3 mx-auto my-5" *ngFor="let file of files; let i = index"  (click)="openFile(file, i);">
-        
-  <mat-card class="example-card">
-   
-    <img mat-card-image [src]="file.imageUrl" alt="Card image cap" >
-    <mat-card-title><h4>{{file.name}}</h4></mat-card-title>
-    <mat-card-subtitle>Dog Breed</mat-card-subtitle> 
-    <mat-card-content>
-      <p>{{file.artists}} 
-       </p>
-    </mat-card-content>
-    <mat-card-actions>
-      <button mat-button>ABOUT</button>
-      <button mat-button (click)="removeTrack(file)">REMOVE</button>
-    </mat-card-actions>
-  </mat-card>
-      
-      </div>
-    </div>
-  </div> -->
-  <div  class="parallax" *ngIf="!submitted">
-    <div class="banner-heading"> Turn up the volume close your eyes and let the music take over your soul</div>
-  </div>
 
-  <!-- <div class="container" *ngIf="!submitted">
-   
-    <div class="heading">All Tracks</div>
-    <div class="row">
-      <div class="col-md-2"  *ngFor="let file of files; let i = index ">
-        <a  class="album-poster" data-switch="3">
-          <img [src]="file.imageUrl"  (click)="openFile(file, i);">
-        </a>
-        <h4>{{file.name}}</h4>
-        <p>{{file.performedBy}} </p>
-        </div>
-    </div>
-  </div> -->
-
-  <div class="container" *ngIf="!submitted">
-   
-    <div class="heading">All Tracks</div>
-    <div class="row">
-      <div class="col-md-2"  *ngFor="let file of files; let i = index ">
-        <a  class="album-poster" data-switch="3">
-          <img [src]="file.imageUrl"  (click)="openFile(file, i);">
-        </a>
-        <h4>{{file.name}}</h4>
-        <p>{{file.performedBy}} </p>
-        <!-- <button class="button remove" (click)="removeTrack(file)">Remove</button> -->
-      </div>
-    </div>
-  </div>
-  <!-- ////////// -->
-  
-  <div class="grid-container" *ngIf="submitted" [ngStyle]="{'filter': 'blur(20px); -webkit-filter: blur(20px)','background-image': 'linear-gradient( rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8) ),url('+ imageUrl +')'}">
+  <div class="grid-container"  [ngStyle]="{'filter': 'blur(20px); -webkit-filter: blur(20px)','background-image': 'linear-gradient( rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8) ),url('+ imageUrl +')'}">
    
     <div class="grid-item grid-left" >
       <img id="track_image" [src]="imageUrl">
@@ -67,8 +12,9 @@
     
     <div class="grid-item grid-right" *ngIf="playScreen">
       <div class="options">
-        <span id="play_option" (click)="changeScreen(1)" [ngClass]="{'white': playScreen, 'grey': !playScreen }">Play</span>
-        <span id="credit_option" (click)="changeScreen(0)" [ngClass]="{'white': creditScreen, 'grey': !creditScreen }">Show Credits</span>
+        <span id="play_option" (click)="changeScreen(0)" [ngClass]="{'white': playScreen, 'grey': !playScreen }">Play</span>
+        <span id="credit_option" (click)="changeScreen(1)" [ngClass]="{'white': creditScreen, 'grey': !creditScreen }">Show Credits</span>
+        <span id="lyrics_option" (click)="changeScreen(2)" [ngClass]="{'white': lyricsScreen, 'grey': !lyricsScreen }">Show Lyrics</span>
         <span id="heart"><i class="fa fa-heart" (click)="likedTrack()" [ngClass]="{'pink': liked}"></i></span>  
       </div>
       <hr>
@@ -116,15 +62,7 @@
           <span id="total">4</span>
         </div>
       </div>
-      <!-- table, th, td {
-        border: 1px solid black;
-        border-collapse: collapse;
-      }
-      th, td {
-        padding: 5px;
-        text-align: left;
-      } -->
-      <!--  PERFORMED_BY, SOURCE, WRITTEN_BY, ADMIN_EMAIL_ID, PRODUCED_BY -->
+     
       <table style="width:100%">
         <tr *ngFor="let pa of performedByArray; index as i">
           <th *ngIf ="i== 0">Performers:</th>

@@ -11,6 +11,7 @@ import { RegistrationService } from './user-landing-page/registration/registrati
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import {MatSliderModule} from '@angular/material/slider';
+import { UserPlaySongComponent } from './user-play-song/user-play-song.component';
 
 
 @NgModule({
@@ -18,7 +19,8 @@ import {MatSliderModule} from '@angular/material/slider';
 
     declarations: [
         LikedTracksComponent,
-        TracksComponent
+        TracksComponent,
+        UserPlaySongComponent
     ],
     imports: [
         BrowserModule,
