@@ -1,30 +1,9 @@
-<!-- <div class="container" *ngIf="!submitted">
-    <div class="row">
-      <div class="col-md-3 mx-auto my-5" *ngFor="let file of files; let i = index"  (click)="openFile(file, i);">
-        
-  <mat-card class="example-card">
-   
-    <img mat-card-image [src]="file.imageUrl" alt="Card image cap" >
-    <mat-card-title><h4>{{file.name}}</h4></mat-card-title>
-    <mat-card-subtitle>Dog Breed</mat-card-subtitle> 
-    <mat-card-content>
-      <p>{{file.artists}} 
-       </p>
-    </mat-card-content>
-    <mat-card-actions>
-      <button mat-button>ABOUT</button>
-      <button mat-button (click)="removeTrack(file)">REMOVE</button>
-    </mat-card-actions>
-  </mat-card>
-      
-      </div>
-    </div>
-  </div> -->
-  <div  class="parallax" *ngIf="!submitted">
+  <div  class="parallax" >
     <div class="banner-heading"> Turn up the volume close your eyes and let the music take over your soul</div>
   </div>
 
-  <!-- <div class="container" *ngIf="!submitted">
+
+  <div class="container" >
    
     <div class="heading">All Tracks</div>
     <div class="row">
@@ -34,172 +13,10 @@
         </a>
         <h4>{{file.name}}</h4>
         <p>{{file.performedBy}} </p>
-        </div>
-    </div>
-  </div> -->
-
-  <div class="container" *ngIf="!submitted">
-   
-    <div class="heading">All Tracks</div>
-    <div class="row">
-      <div class="col-md-2"  *ngFor="let file of files; let i = index ">
-        <a  class="album-poster" data-switch="3">
-          <img [src]="file.imageUrl"  (click)="openFile(file, i);">
-        </a>
-        <h4>{{file.name}}</h4>
-        <p>{{file.performedBy}} </p>
-        <!-- <button class="button remove" (click)="removeTrack(file)">Remove</button> -->
       </div>
     </div>
-  </div>
-  <!-- ////////// -->
-  
-  <div class="grid-container" *ngIf="submitted" [ngStyle]="{'filter': 'blur(20px); -webkit-filter: blur(20px)','background-image': 'linear-gradient( rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8) ),url('+ imageUrl +')'}">
-   
-    <div class="grid-item grid-left" >
-      <img id="track_image" [src]="imageUrl">
-      <div class="volume">
-        <p id="volume_show">{{showVolume}}</p>
-        <i class="fa fa-volume-up" aria-hidden="true" (click)="mute_sound()" id="volume_icon"></i>
-        <mat-slider class="volume-slider" min="0" max="1" step="0.01"(input)="onSliderChangeVolume($event)" [value]="state?.volume"  [disabled]="state.error || currentFile.index === undefined" id="volume"></mat-slider> 
-      </div>
-    </div>
-    
-    <div class="grid-item grid-right" *ngIf="playScreen">
-      <div class="options">
-        <span id="play_option" (click)="changeScreen(1)" [ngClass]="{'white': playScreen, 'grey': !playScreen }">Play</span>
-        <span id="credit_option" (click)="changeScreen(0)" [ngClass]="{'white': creditScreen, 'grey': !creditScreen }">Show Credits</span>
-        <span id="heart"><i class="fa fa-heart" (click)="likedTrack()" [ngClass]="{'pink': liked}"></i></span>  
-      </div>
-      <hr>
-      <div class="track-functionality">
-        <p id="title">{{trackName}}</p><br>
-        <p id="artist">{{performedByArray}}</p>
-        <div class="show_song_no">
-          <span id="present">1</span>
-          <span>/</span>
-          <span id="total">4</span>
-        </div>
-      </div>
-      <!--- middle part --->
-      <div class="middle">
-        <button [disabled]="isFirstPlaying()" (click)="previous()" id="pre"><i class="fa fa-step-backward" aria-hidden="true"></i></button>
-        <button (click)="play()" [disabled]="state.error" *ngIf="!state?.playing && !state?.error" id="play"><i class="fa fa-play" aria-hidden="true"></i></button>
-        <button (click)="pause()" *ngIf="state?.playing"  id="pause"><i class="fa fa-pause" aria-hidden="true"></i></button>
-        <button [disabled]="isLastPlaying()" (click)="next()" id="next"><i class="fa fa-step-forward" aria-hidden="true"></i></button>
-      </div>
-  
-      <div class="autoPlay">
-        <button id="auto" [ngClass]="{'autoPlayAbled' : autoPlayColor, 'autoPlayDisabled': !autoPlayColor}" (click)="autoplay_switch()">Auto play <i class="fa fa-circle-o-notch" aria-hidden="true"></i></button>
-         {{ state?.currentTime==state?.duration ? duration() : '' }}
-      </div>
-  
-      <div class="duration">
-        <span class="duration-start">{{state?.readableCurrentTime}}</span>
-        <mat-slider class="time-slider" min="0" [max]="state?.duration" step="1" [value]="state?.currentTime" (input)="onSliderChangeEnd($event)" [disabled]="state.error || currentFile.index === undefined"></mat-slider> 
-         <span class="duration-end">{{state?.readableDuration}}</span>
-      </div>   
-    </div>
-  
-    <div class="grid-item grid-right" *ngIf="creditScreen">
-      <div class="options">
-        <span id="play_option" (click)="changeScreen(1)" [ngClass]="{'white': playScreen, 'grey': !playScreen }">Play</span>
-        <span id="credit_option" (click)="changeScreen(0)" [ngClass]="{'white': creditScreen, 'grey': !creditScreen }">Show Credits</span>
-        <span id="heart"><i class="fa fa-heart" (click)="likedTrack()" [ngClass]="{'pink': liked}"></i></span>  
-      </div><hr>
-      <div class="track-functionality">
-        <p id="title">{{trackName}}</p><br>
-        <p id="artist">{{performedByArray}}</p>
-        <div class="show_song_no">
-          <span id="present">1</span>
-          <span>/</span>
-          <span id="total">4</span>
-        </div>
-      </div>
-      <!-- table, th, td {
-        border: 1px solid black;
-        border-collapse: collapse;
-      }
-      th, td {
-        padding: 5px;
-        text-align: left;
-      } -->
-      <!--  PERFORMED_BY, SOURCE, WRITTEN_BY, ADMIN_EMAIL_ID, PRODUCED_BY -->
-      <table style="width:100%">
-        <tr *ngFor="let pa of performedByArray; index as i">
-          <th *ngIf ="i== 0">Performers:</th>
-          <th *ngIf ="i!= 0"></th>
-          <td >{{pa}}</td>
-        </tr>
-        <tr *ngFor="let sa of SourceArray; index as i">
-          <th *ngIf ="i== 0">Source:</th>
-          <th *ngIf ="i!= 0"></th>
-          <td >{{sa}}</td>
-        </tr>
-        <tr *ngFor="let wa of WrittenByArray; index as i">
-          <th *ngIf ="i== 0">Written By:</th>
-          <th *ngIf ="i!= 0"></th>
-          <td >{{wa}}</td>
-        </tr>
-        <tr *ngFor="let pba of ProducedByArray; index as i">
-          <th *ngIf ="i== 0">Produced By:</th>
-          <th *ngIf ="i!= 0"></th>
-          <td >{{pba}}</td>
-        </tr>
-      </table>
-    </div>
-  
-  </div>
-
-
-  <!-- //////////////PREVIOUS PLAY SECTION//////////// -->
-  <!-- <div class="containerr" *ngIf="submitted">
-    <div class="main">
-    <p id="logo"><i class="fa fa-music"></i>Music</p>
-  
- 
-   <div class="left">
-    <img id="track_image" [src]="imageUrl">
-       <div class="volume">
-          <p id="volume_show">{{showVolume}}</p>
-          <i class="fa fa-volume-up" aria-hidden="true" (click)="mute_sound()" id="volume_icon"></i>
-          <mat-slider class="volume-slider" min="0" max="1" step="0.01"(input)="onSliderChangeVolume($event)" [value]="state?.volume"  [disabled]="state.error || currentFile.index === undefined" id="volume"></mat-slider> 
-        </div>
-
    </div>
-
-  <div class="right">
-      <div class="show_song_no">
-        <p id="present">{{index}}</p>
-        <p>/</p>
-        <p id="total">{{files.length-1}}</p>
-      </div>
-
-   <p id="title">{{trackName}}</p>
-    <p id="artist">{{artist}}</p>
-
-        <div class="middle">
-           <button [disabled]="isFirstPlaying()" (click)="previous()" id="pre"><i class="fa fa-step-backward" aria-hidden="true"></i></button>
-           <button (click)="play()" [disabled]="state.error" *ngIf="!state?.playing && !state?.error" id="play"><i class="fa fa-play" aria-hidden="true"></i></button>
-           <button (click)="pause()" *ngIf="state?.playing"  id="pause"><i class="fa fa-pause" aria-hidden="true"></i></button>
-           <button [disabled]="isLastPlaying()" (click)="next()" id="next"><i class="fa fa-step-forward" aria-hidden="true"></i></button>
-         </div>
-
-      <div class="duration">
-        <span class="duration-start">{{state?.readableCurrentTime}}</span>
-        <mat-slider class="time-slider" min="0" [max]="state?.duration" step="1" [value]="state?.currentTime" (input)="onSliderChangeEnd($event)" [disabled]="state.error || currentFile.index === undefined"></mat-slider> 
-         <span class="duration-end">{{state?.readableDuration}}</span>
-        </div>
-         <button id="auto" [ngClass]="{'autoPlayAbled' : autoPlayColor, 'autoPlayDisabled': !autoPlayColor}" (click)="autoplay_switch()">Auto play <i class="fa fa-circle-o-notch" aria-hidden="true"></i></button>
-         {{ state?.currentTime==state?.duration ? duration() : '' }}
-    </div>
-
-
-</div>
-</div> -->
-
-
-
+  
 
 
 

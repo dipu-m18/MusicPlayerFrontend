@@ -12,6 +12,8 @@ import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import {MatSliderModule} from '@angular/material/slider';
 import { UserPlaySongComponent } from './user-play-song/user-play-song.component';
+import { UpdateProfileComponent } from '../user/user-home/update-profile/update-profile.component';
+import { UserPlayLikedSongComponent } from './user-play-liked-song/user-play-liked-song.component';
 
 
 @NgModule({
@@ -20,7 +22,9 @@ import { UserPlaySongComponent } from './user-play-song/user-play-song.component
     declarations: [
         LikedTracksComponent,
         TracksComponent,
-        UserPlaySongComponent
+        UserPlaySongComponent,
+        UpdateProfileComponent,
+        UserPlayLikedSongComponent
     ],
     imports: [
         BrowserModule,

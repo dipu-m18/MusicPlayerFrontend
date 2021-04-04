@@ -11,9 +11,12 @@
     box-sizing: border-box;
 }
 
+.card{
+    background-color: black;
+}
 
 .container{
-        background-size: cover;
+    background-size: cover;
     background-repeat: no-repeat;
  }
  
@@ -25,10 +28,10 @@
 
 
 .data{ 
-    background-color: rgb(55,34,246);
     width: 96.4%;
     margin-left: 250px;
     top:0;
+    background:transparent;
     background-size: cover;
     background-repeat: no-repeat;
 }

@@ -1,15 +1,17 @@
+
+<div class="card">
+<div class="card-details">
 <div class="logo">
-    <h1>Music Player</h1>
+    Music Player
 </div>
 <div>
     <div>
-        Login to start listening<br>
+        <p class="style-heading">login to start listening</p><br>
         <!-- <button type="button" class="btn btn-primary">Sign up Facebook</button> -->
-        <button type="button" class="btn btn-dark">CONTINUE WITH GOOGLE</button>
-         <br>
+        <!-- <button type="button" class="btn btn-dark">CONTINUE WITH GOOGLE</button>
+         <br> -->
     </div>
-    OR
-    <br>
+    
         <div>
             <form [formGroup]="loginForm" (ngSubmit)="login()" class="form">
                 <div class="form-group">
@@ -20,11 +22,11 @@
                 <div class="form-group">
                     <label>Password</label>
                     <input type="password" class="form-control" formControlName="password" >
-                    <span class="error-message" *ngIf="loginForm.controls.password.invalid && loginForm.controls.password.touched" class="alert alert-danger">The feild is required</span>
+                    <span class="error-message" *ngIf="loginForm.controls.password.invalid && loginForm.controls.password.touched" >The feild is required</span>
                 </div>
                
-                <button type="submit" class="btn btn-primary" >LOG IN</button>
-                <button type="reset" [disabled]="loginForm.pristine" class="btn btn-warning" (click)="reset()">Reset</button>
+                <button type="submit" class="btn btn btn-dark" >Log In</button>
+                <button type="reset" [disabled]="loginForm.pristine" class=" reset btn btn btn-light" (click)="reset()">Reset</button>
             </form>
             <div *ngIf="errorMessage!=null || errorMessage!=''">
                 <span class="text-danger">{{errorMessage}}</span>
@@ -37,4 +39,6 @@
         <div>
             <span>Don't have any account?  <a routerLink="../register">SIGN UP FOR MUSIC PLAYER</a></span>
         </div>
+    </div>
+</div>
 </div>

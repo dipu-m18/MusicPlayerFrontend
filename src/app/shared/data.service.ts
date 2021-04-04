@@ -10,6 +10,7 @@ export class DataService {
   sharedTrack: Track;
   sharedLikedTrack: LikedTrack;
   sharedFiles: Track[];
+  sharedLikedFiles: LikedTrack[];
   sharedIndex: number;
   constructor() { }
 }

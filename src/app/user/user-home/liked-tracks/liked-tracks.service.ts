@@ -21,12 +21,6 @@ export class LikedTracksService {
       .pipe(catchError(this.handleError));
   }
 
-  getLyrics(performedByArray: any, trackName: any):Observable<LikedTrack[]>{
-    const url = 'https://api.lyrics.ovh/v1/'+performedByArray+"/"+trackName;
-    return this.http.get<any>(url)
-      .pipe(catchError(this.handleError));
-  }
-
 
   private handleError(err: HttpErrorResponse) {
     console.log(err)

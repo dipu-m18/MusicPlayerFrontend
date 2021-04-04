@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, SystemJsNgModuleLoader } from '@angular/core';
 import {DataService} from '../../shared/data.service';
 import  { Router } from '@angular/router';
 import { User } from 'src/app/shared/models/user';
@@ -7,7 +7,8 @@ import {Track} from '../../shared/models/track';
 import { AudioService } from './../../admin/admin-home/admin-songs/audio.services';
 import { TracksService } from './../user-home/tracks/tracks.service';
 import { LikedTrack } from '../../shared/models/likedTrack';
-
+import { UserPlaySongService } from './user-play-song.service';
+import {MatSliderModule} from '@angular/material/slider';
 
 @Component({
   selector: 'app-user-play-song',
@@ -15,7 +16,7 @@ import { LikedTrack } from '../../shared/models/likedTrack';
   styleUrls: ['./user-play-song.component.css']
 })
 export class UserPlaySongComponent implements OnInit {
-  i:number =1;
+   i:number =1;
    state: StreamState;
    currentFile: any={};
    submitted: boolean = false;
@@ -29,10 +30,11 @@ export class UserPlaySongComponent implements OnInit {
    autoPlayColor:boolean;
    liked: boolean;
    files: Track[];
+   noOfTracks: number;
    user: User;
    successMessage: string;
    errorMessage: string
-
+   lyrics:string;
    playScreen: boolean = true;
   creditScreen: boolean =false;
   lyricsScreen:boolean =false
@@ -45,7 +47,12 @@ export class UserPlaySongComponent implements OnInit {
   constructor(private router: Router, 
     private audioService: AudioService,
     private tracksService: TracksService,
-    private dataService: DataService) { 
+    private dataService: DataService,
+    private userPlaySongService: UserPlaySongService) { 
+      if(this.dataService.sharedFiles==null){
+       this.router.navigate(['/home/tracks']);
+       this.audioService.stop();
+      }
       this.audioService.getState()
       .subscribe(state => {
         this.state= state
@@ -53,39 +60,47 @@ export class UserPlaySongComponent implements OnInit {
     }
 
   ngOnInit(): void {
+    const userJson=sessionStorage.getItem("user")
+    this.user = userJson!=null? JSON.parse(userJson) : new User();
     this.files = this.dataService.sharedFiles
-    this.trackName = this.dataService.sharedTrack.name;
-    this.track= this.dataService.sharedTrack
-    this.imageUrl= this.dataService.sharedTrack.imageUrl;
+    this.noOfTracks = this.dataService.sharedFiles.length
     this.index= this.dataService.sharedIndex;
+    this.track= this.dataService.sharedTrack
     this.liked= false;
     this.playStream(this.track, this.index)
+    this.getLyrics();
   }
 
   playStream(track:Track, index:number){
-    const url: any = track.trackUrl
+    const url= track.trackUrl
     this.trackName = track.name;
     this.track= track
     this.imageUrl= track.imageUrl;
     this.index= index;
     this.performedByArray =track.performedBy.split(", ")
-      console.log(track.performedBy.split(", "))
-      for(var x in this.performedByArray){
-          console.log(this.performedByArray[x]);
-      }
       this.SourceArray = track.source.split(", ")
       this.WrittenByArray = track.writtenBy.split(", ")
       this.ProducedByArray = track.producedBy.split(", ")
       this.Genre = track.genre
       this.audioService.stop();
+
+    this.getLyrics();
+    this.audioService.playStream(url)
+  .subscribe((events: any) => {
+  });
+  
+  console.log(this.state.volume)
       if(this.state.volume!=null){
       this.showVolume= this.state.volume*10
     }
-  console.log(url)
-    this.audioService.playStream(url)
-      .subscribe((events: any) => {
-        
-      });
+   
+}
+
+getLyrics(){
+ this.userPlaySongService.getLyrics(this.performedByArray, this.trackName)
+  .subscribe((slyrics:any) =>{
+    this.lyrics=slyrics.lyrics.replaceAll('/\n\n\n\n/','/\n\n/');
+  })
 }
 
   play(){
@@ -130,13 +145,12 @@ export class UserPlaySongComponent implements OnInit {
   }
 
   isLastPlaying(){
-    console.log(this.files)
+    // console.log(this.files)
     // console.log("indexxxxx "+this.files.length)
      return this.index === this.files.length - 1;
   }
 
   onSliderChangeEnd(change:any){
-    //console.log(change.value)
     this.audioService.seekTo(change.value);
     if(this.audioService.checkEnded()){
       if(this.autoPlay==1){
@@ -148,7 +162,6 @@ export class UserPlaySongComponent implements OnInit {
   }
 
   onSliderChangeVolume(change: any){
-    //console.log(change.value)
     this.audioService.changeVolume(change.value);
     if(this.state.volume!=null){
     this.showVolume= this.state.volume*10;
@@ -163,7 +176,6 @@ export class UserPlaySongComponent implements OnInit {
   }
 
  autoplay_switch(){
-   console.log(this.autoPlay)
     if(this.autoPlay==1){
         this.autoPlay = 0;
         this.autoPlayColor=false
@@ -175,7 +187,6 @@ export class UserPlaySongComponent implements OnInit {
   }
 
   duration(){
-    console.log("duration "+this.state.currentTime)
     if(this.audioService.checkEnded() && this.autoPlay==1){
       const indexx=this.index+1;
       const file = this.files[indexx];
@@ -184,7 +195,6 @@ export class UserPlaySongComponent implements OnInit {
   }
 
   changeScreen(i: any){
-    console.log("iiiiiiiiiiiiii "+i)
    if(i==0){
      this.playScreen=true;
      this.creditScreen=false;
@@ -201,9 +211,7 @@ export class UserPlaySongComponent implements OnInit {
  }
 
  likedTrack(){
-   console.log(this.liked)
   this.liked =true;
-  console.log(this.liked)
   this.successMessage = '';
   this.errorMessage = '';
   let likedTrack: LikedTrack = new LikedTrack();
@@ -214,8 +222,9 @@ export class UserPlaySongComponent implements OnInit {
   likedTrack.track=file;
   likedTrack.likedTrackId= file.trackId
   console.log(this.liked)
-  this.dataService.sharedLikedTrack=likedTrack
-  this.tracksService.addToLikedTrackList(likedTrack).subscribe((response: any) => {
+  console.log(this.likedTrack)
+  // this.dataService.sharedLikedTrack=likedTrack
+  this.userPlaySongService.addToLikedTrackList(likedTrack).subscribe((response: any) => {
     console.log(response)
     this.successMessage = response.successMessgae
   },
@@ -223,6 +232,5 @@ export class UserPlaySongComponent implements OnInit {
   )
 }
 
-  
 
 }
